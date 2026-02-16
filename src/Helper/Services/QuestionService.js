@@ -21,4 +21,15 @@ export async function GetSingleTestquestion(question_id) {
     }
 }
 
+export async function GetAllQuestionsFromSubject(subjectid) {
+    
+    try {
+        const response = await httpAxios
+            .get(`/subjects/${subjectid}/questions/`)
+        return response
+    } catch (error) {
+        throw error;
+    }
+}
+
 

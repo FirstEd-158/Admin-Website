@@ -3,7 +3,7 @@ import { httpAxios } from "@/Helper/httpHelper";
 export async function GetAllTestsofTestSeries(testseries_id) {
     try {
         const response = await httpAxios
-            .get(`/test_series/${testseries_id}/tests`)
+            .get(`/test_series/${testseries_id}/tests/`)
         return response
     } catch (error) {
         throw error;
