@@ -1,6 +1,10 @@
 "use client";
 
-import { AddTestSeries, DeleteTestSeries, GetAllTestSeries } from "@/Helper/Services/TestSeriesService";
+import {
+  AddTestSeries,
+  DeleteTestSeries,
+  GetAllTestSeries,
+} from "@/Helper/Services/TestSeriesService";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Slide, toast } from "react-toastify";
@@ -11,7 +15,21 @@ const TestSeriesPage = () => {
 
   const [testSeriesList, setTestSeriesList] = useState([]);
   const [isAdding, setIsAdding] = useState(false);
-  const [newTitle, setNewTitle] = useState("");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    image_url: "",
+    old_price: 0,
+    new_price: 0,
+    type: 0,
+    end_date: "",
+    validity: 0,
+    description: "",
+    topic_wise_test: 0,
+    subject_wise_test: 0,
+    full_length_test: 0,
+    total_test: 0,
+  });
 
   const goToTestSeries = (TsId) => {
     router.push(`/Admin/Domain/${DomainId}/TestSeries/${TsId}`);
@@ -23,75 +41,87 @@ const TestSeriesPage = () => {
 
   const handleCancel = () => {
     setIsAdding(false);
-    setNewTitle("");
-  };
-
-  useEffect(() => {
-    const fetchTestSeies = async () => {
-      try {
-        const result = await GetAllTestSeries(DomainId);
-
-
-        setTestSeriesList(result.data || []); // ensure it's not undefined
-      } catch (error) {
-
-        toast.error("Failed to fetch domains!");
-      }
-    };
-
-    fetchTestSeies();
-  }, [DomainId]);
-
-  const handleSave = async () => {
-    if (!newTitle.trim()) {
-      alert("Please enter a test series title");
-      return;
-    }
-
-    const data = {
-      name: newTitle,
-      image_url: "https://actual-apricot-h40giqless.edgeone.app/FirstEd_TestSeries.png",
+    setFormData({
+      name: "",
+      image_url: "",
       old_price: 0,
       new_price: 0,
       type: 0,
-      end_date: "2025-11-17T13:48:05.978Z",
-      validity: 0
+      end_date: "",
+      validity: 0,
+      description: "",
+      topic_wise_test: 0,
+      subject_wise_test: 0,
+      full_length_test: 0,
+      total_test: 0,
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  useEffect(() => {
+    const fetchTestSeries = async () => {
+      try {
+        const token = localStorage.getItem("accessToken") ?? "";
+        const result = await GetAllTestSeries(DomainId , token);
+        setTestSeriesList(result.data || []);
+      } catch (error) {
+        toast.error("Failed to fetch test series!");
+      }
+    };
+
+    fetchTestSeries();
+  }, [DomainId]);
+
+  const handleSave = async () => {
+    if (!formData.name.trim()) {
+      toast.error("Please enter test series name");
+      return;
     }
 
     try {
-      const result = await AddTestSeries(data, DomainId);
-      setTestSeriesList([
-        ...testSeriesList, result.data
-      ]);
-      setNewTitle("");
-      setIsAdding(false);
-      toast.success(`TestSeries ${data.name} Added Successfully`, { position: 'top-center', transition: Slide });
+      const result = await AddTestSeries(formData, DomainId);
+
+      setTestSeriesList([...testSeriesList, result.data]);
+
+      toast.success(`TestSeries ${formData.name} Added Successfully`, {
+        position: "top-center",
+        transition: Slide,
+      });
+
+      handleCancel();
     } catch (error) {
-      // console.log(error);
-
+      toast.error("Failed to create test series");
     }
-
-
   };
 
   const handleDelete = async (TS) => {
     if (confirm("Are you sure you want to delete this test series?")) {
       try {
-        const result = await DeleteTestSeries(TS.id);
-        console.log(result);
+        await DeleteTestSeries(TS.id);
+
         setTestSeriesList(testSeriesList.filter((ts) => ts.id !== TS.id));
 
-        toast.success(`TestSeries ${TS.name} Deleted Successfully`, { position: 'top-center', transition: Slide });
+        toast.success(`TestSeries ${TS.name} Deleted Successfully`, {
+          position: "top-center",
+          transition: Slide,
+        });
       } catch (error) {
         console.log(error);
-
+        toast.error("Failed to delete");
       }
-
     }
   };
 
   return (
-    <div className="p-8  min-h-[calc(100vh-59px)] text-white font-sans flex flex-col">
+    <div className="p-8 min-h-[calc(100vh-59px)] text-white font-sans flex flex-col">
       <h1 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg tracking-wide">
         Test Series for <span className="text-teal-400">{DomainId}</span>
       </h1>
@@ -106,26 +136,131 @@ const TestSeriesPage = () => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+        <div className="max-w-3xl mx-auto bg-white/10 p-6 rounded-2xl shadow-lg flex flex-col gap-4 mb-10">
+
           <input
-            type="text"
-            placeholder="Enter test series title"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            className="w-full sm:w-80 px-4 py-2 rounded-lg bg-white/90 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-400 shadow-md"
+            name="name"
+            placeholder="Test Series Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-lg bg-white/90 text-gray-900"
           />
-          <button
-            onClick={handleSave}
-            className="bg-gradient-to-r from-green-500 to-green-700 px-6 py-2 rounded-lg text-white font-semibold hover:scale-105 shadow-md transition-all duration-300"
-          >
-            Save
-          </button>
-          <button
-            onClick={handleCancel}
-            className="bg-gradient-to-r from-red-500 to-red-700 px-6 py-2 rounded-lg text-white font-semibold hover:scale-105 shadow-md transition-all duration-300"
-          >
-            Cancel
-          </button>
+
+          <input
+            name="image_url"
+            placeholder="Image URL"
+            value={formData.image_url}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+          />
+
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              type="number"
+              name="old_price"
+              placeholder="Old Price"
+              value={formData.old_price}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="new_price"
+              placeholder="New Price"
+              value={formData.new_price}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="type"
+              placeholder="Type"
+              value={formData.type}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="validity"
+              placeholder="Validity (days)"
+              value={formData.validity}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="datetime-local"
+              name="end_date"
+              value={formData.end_date}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              type="number"
+              name="topic_wise_test"
+              placeholder="Topic Wise Tests"
+              value={formData.topic_wise_test}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="subject_wise_test"
+              placeholder="Subject Wise Tests"
+              value={formData.subject_wise_test}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="full_length_test"
+              placeholder="Full Length Tests"
+              value={formData.full_length_test}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+
+            <input
+              type="number"
+              name="total_test"
+              placeholder="Total Tests"
+              value={formData.total_test}
+              onChange={handleChange}
+              className="px-4 py-2 rounded-lg bg-white/90 text-gray-900"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4 mt-4">
+            <button
+              onClick={handleSave}
+              className="bg-green-600 px-6 py-2 rounded-lg font-semibold hover:scale-105"
+            >
+              Save
+            </button>
+
+            <button
+              onClick={handleCancel}
+              className="bg-red-600 px-6 py-2 rounded-lg font-semibold hover:scale-105"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
 
@@ -142,22 +277,18 @@ const TestSeriesPage = () => {
               title={`Go to ${ts.name}`}
               onClick={() => goToTestSeries(ts.id)}
             >
-              <h2
+              <h2 className="text-xl font-semibold mb-3">{ts.name}</h2>
 
-                className="text-xl font-semibold mb-3 drop-shadow-md"
-              >
-                {ts.name}
-              </h2>
-              <p className="text-sm text-gray-300 mb-4">Click to view details & manage tests</p>
+              <p className="text-sm text-gray-300 mb-4">
+                Click to view details & manage tests
+              </p>
 
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDelete(ts);
                 }}
-                className="absolute top-4 right-4 text-red-400 hover:text-red-600 font-extrabold text-2xl rounded-full hover:bg-red-100/20 px-2 transition-colors duration-300 select-none"
-                title="Delete Test Series"
-                aria-label={`Delete ${ts.title}`}
+                className="absolute top-4 right-4 text-red-400 hover:text-red-600 font-extrabold text-2xl"
               >
                 &times;
               </button>

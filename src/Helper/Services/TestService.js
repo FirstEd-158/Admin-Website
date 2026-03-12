@@ -2,8 +2,12 @@ import { httpAxios } from "@/Helper/httpHelper";
 
 export async function GetAllTestsofTestSeries(testseries_id) {
     try {
-        const response = await httpAxios
-            .get(`/test_series/${testseries_id}/tests/`)
+
+        console.log(testseries_id);
+        
+        const response = await httpAxios.get(`/test_series/${testseries_id}/tests/`);
+        console.log(response);
+        
         return response
     } catch (error) {
         throw error;

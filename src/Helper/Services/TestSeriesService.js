@@ -1,10 +1,15 @@
 
 import { httpAxios } from "@/Helper/httpHelper";
 
-export async function GetAllTestSeries(domainid) {
+export async function GetAllTestSeries(domainid, token) {
     try {
+        
         const response = await httpAxios
-            .get(`/domains/${domainid}/test_series`)
+            .get(`/domains/${domainid}/test_series`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
         return response
     } catch (error) {
         throw error;

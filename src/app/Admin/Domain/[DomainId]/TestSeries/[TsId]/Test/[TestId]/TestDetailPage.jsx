@@ -9,7 +9,6 @@ import katex from "katex";
 import "katex/dist/katex.min.css";
 import { useParams } from "next/navigation";
 import { GetSingleTest, UpdateTest } from "@/Helper/Services/TestService";
-
 const reOrder = (list, start, end) => {
   const result = Array.from(list);
   const [removed] = result.splice(start, 1);
