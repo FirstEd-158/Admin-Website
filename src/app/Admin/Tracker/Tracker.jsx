@@ -129,6 +129,7 @@ const SyllabusTracker = () => {
     } catch (error) {
       console.log(error);
     }
+    
   };
 
   // --- Delete Functions ---
