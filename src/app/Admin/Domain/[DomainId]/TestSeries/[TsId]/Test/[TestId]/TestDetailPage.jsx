@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { GetAllDomain } from "@/Helper/Services/DomainService";
 import { GetAllSubjects } from "@/Helper/Services/SubjectService";
-import { GetAllQuestionsFromSubject, GetSingleTestquestion } from "@/Helper/Services/QuestionService";
+import { GetAllQuestionsFromSubject, GetQuestioninbulk, GetSingleTestquestion } from "@/Helper/Services/QuestionService";
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { useParams } from "next/navigation";
@@ -41,7 +41,6 @@ const RichTextViewer = ({ content }) => {
 
 const TestDetailPage = () => {
   const { TestId } = useParams();
-
   const [questions, setQuestions] = useState([]); 
   const [showForm, setShowForm] = useState(false);
   const [domains, setDomains] = useState([]);
@@ -73,10 +72,9 @@ const TestDetailPage = () => {
 
         const questionIds = testRes.data.questions || [];
         if (questionIds.length > 0) {
-          const questionData = await Promise.all(
-            questionIds.map(id => GetSingleTestquestion(id).then(res => res.data))
-          );
-          setQuestions(questionData);
+          const res = await GetQuestioninbulk(questionIds);
+          console.log(res);
+          setQuestions(res.data);
         }
       } catch (err) {
         console.error("Init Error:", err);

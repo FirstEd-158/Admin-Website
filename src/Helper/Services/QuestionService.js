@@ -21,6 +21,18 @@ export async function GetSingleTestquestion(question_id) {
     }
 }
 
+
+export async function GetQuestioninbulk(questionarray) {
+    try {
+        console.log(questionarray);
+        const response = await httpAxios
+            .post(`/questions/bulk` , {"question_ids":questionarray})
+        return response
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function GetAllQuestionsFromSubject(subjectid) {
     
     try {
