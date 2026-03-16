@@ -33,12 +33,22 @@ export async function GetQuestioninbulk(questionarray) {
     }
 }
 
-export async function GetAllQuestionsFromSubject(subjectid) {
-    
+export async function GetAllQuestionsFromSubject(subjectid, pageno = 1, limit = 10) {
     try {
-        const response = await httpAxios
-            .get(`/subjects/${subjectid}/questions/`)
-        return response
+        const response = await httpAxios.get(
+            `/subjects/${subjectid}/questions/`,
+            {
+                params: {
+                    pageno: pageno,
+                    limit: 1
+                }
+            }
+        );
+
+        console.log(response);
+        
+
+        return response;
     } catch (error) {
         throw error;
     }
