@@ -30,6 +30,7 @@ const SignIn = () => {
        const result = await SigninFunction(data);
        console.log("2");
        console.log(result);
+       localStorage.setItem('accessToken', result.data.access_token);
        toast.success("User Logged Successfully",
                 {position: 'top-center'}
               );

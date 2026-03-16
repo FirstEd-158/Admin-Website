@@ -40,7 +40,7 @@ export async function GetAllQuestionsFromSubject(subjectid, pageno = 1, limit = 
             {
                 params: {
                     pageno: pageno,
-                    limit: 1
+                    limit: limit
                 }
             }
         );

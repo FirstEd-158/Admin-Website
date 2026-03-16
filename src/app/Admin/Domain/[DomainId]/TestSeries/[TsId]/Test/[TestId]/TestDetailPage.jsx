@@ -68,9 +68,9 @@ const TestDetailPage = () => {
   const [loading, setLoading] = useState(true);
 
   const [pageNo, setPageNo] = useState(1);
-  const [pageSize] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
-  const [maxPage, setMaxPage] = useState(50);
+  const [maxPage, setMaxPage] = useState(0);
   const [visiblePages, setVisiblePages] = useState([]);
 
   const [pageLoading, setPageLoading] = useState(false);
@@ -140,8 +140,9 @@ const TestDetailPage = () => {
           pageNo,
           pageSize
         );
+        setMaxPage(res.data.total_pages);
 
-        const formatted = (res.data || []).map((q) => ({
+        const formatted = (res.data.data || []).map((q) => ({
           id: q.id,
           type: q.type.toUpperCase(),
           text: q.text,
@@ -323,6 +324,18 @@ const TestDetailPage = () => {
               <option value="NAT">NAT</option>
             </select>
 
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(e.target.value)}
+              className="p-2 text-black rounded"
+            >
+              <option value="">Page Size</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+
           </div>
 
           {/* PAGINATION */}
@@ -334,12 +347,13 @@ const TestDetailPage = () => {
               onClick={() => setPageNo((p) => Math.max(1, p - 1))}
               className="px-3 py-1 bg-white/10 rounded disabled:opacity-40"
             >
-              ‹
+              {"<"}
             </button>
 
-            {visiblePages.map((p, index) =>
+
+            {selectedDomain && selectedSubject && visiblePages.map((p, index) =>
               p === "..." ? (
-                <span key={index} className="px-3 py-1 text-gray-400">
+                <span key={index + p} className="px-3 py-1 text-gray-400">
                   ...
                 </span>
               ) : (
@@ -365,7 +379,7 @@ const TestDetailPage = () => {
               }
               className="px-3 py-1 bg-white/10 rounded disabled:opacity-40"
             >
-              ›
+              {">"}
             </button>
 
             {pageLoading && (
