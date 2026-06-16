@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminDashboard from './adminDashboard'
+import AdminDashboard from './AdminDashboard'
 
 const page = () => {
   return (

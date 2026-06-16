@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminSidebar from './adminSidebar'
+import AdminSidebar from './AdminSidebar'
 
 
 const layout = ({ children }) => {

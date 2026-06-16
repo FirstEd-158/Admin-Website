@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminProfile from './adminProfile'
+import AdminProfile from './AdminProfile'
 
 const page = () => {
   return (
