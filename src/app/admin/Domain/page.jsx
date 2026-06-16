@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import DomainManagement from './domainManagement'
+import DomainManagement from './DomainManagement'
 
 const page = () => {
   return (

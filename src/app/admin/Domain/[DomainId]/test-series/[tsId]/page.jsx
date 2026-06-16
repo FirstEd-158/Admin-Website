@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import TestSeriesDetail from './test-seriesDetail'
+import TestSeriesDetail from './TestSeriesDetail'
 
 
 
