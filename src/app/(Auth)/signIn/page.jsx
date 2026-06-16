@@ -1,5 +1,5 @@
 import React from 'react'
-import SignIn from './signin'
+import SignIn from './SignIn'
 
 const page = () => {
   return (
