@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import AddQuestion from './add-question'
+import AddQuestion from './AddQuestion'
 
 const page = () => {
   return (

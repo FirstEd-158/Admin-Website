@@ -4,7 +4,7 @@ import {
   AddTestSeries,
   DeleteTestSeries,
   GetAllTestSeries,
-} from "@/Helper/Services/test-seriesService";
+} from "@/Helper/Services/TestSeriesService";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Slide, toast } from "react-toastify";
