@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/domainService";
+import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/DomainService";
 import { Slide, toast } from "react-toastify";
 
 const DomainManagement = () => {

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { AddTestSections, GetAllTestSections } from "@/Helper/Services/testSectionService";
-import { AddTests, GetAllTestsofTestSeries } from "@/Helper/Services/testService";
+import { AddTestSections, GetAllTestSections } from "@/Helper/Services/TestSectionService";
+import { AddTests, GetAllTestsofTestSeries } from "@/Helper/Services/TestService";
 
 const TestSeriesDetail = () => {
     const router = useRouter();

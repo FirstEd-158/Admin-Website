@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { GetAllDomain } from "@/Helper/Services/domainService";
+import { GetAllDomain } from "@/Helper/Services/DomainService";
 import { GetAllSubjects } from "@/Helper/Services/SubjectService";
 import {
   GetAllQuestionsFromSubject,
@@ -11,7 +11,7 @@ import {
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { useParams } from "next/navigation";
-import { GetSingleTest, UpdateTest } from "@/Helper/Services/testService";
+import { GetSingleTest, UpdateTest } from "@/Helper/Services/TestService";
 
 const reOrder = (list, start, end) => {
   const result = Array.from(list);
