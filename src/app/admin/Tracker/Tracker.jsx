@@ -1,5 +1,5 @@
 "use client";
-import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/domainService";
+import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/DomainService";
 import { AddSubject, DeleteSubject, GetAllSubjects } from "@/Helper/Services/SubjectService";
 // Assuming you have these services for subtopics as well
 import { AddSubTopic, DeleteSubTopic, GetAllSubTopics } from "@/Helper/Services/SubTopicService";

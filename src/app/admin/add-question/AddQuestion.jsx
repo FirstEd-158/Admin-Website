@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { FiPlus, FiX } from "react-icons/fi";
-import { GetAllDomain } from "@/Helper/Services/domainService";
+import { GetAllDomain } from "@/Helper/Services/DomainService";
 import { GetAllSubjects, AddSubject } from "@/Helper/Services/SubjectService";
 import { toast } from "react-toastify";
 
