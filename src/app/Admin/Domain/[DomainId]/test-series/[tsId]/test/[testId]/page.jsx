@@ -1,6 +1,6 @@
 
 import React from 'react'
-import TestDetailPage from './TestDetailPage'
+import TestDetailPage from './testDetailPage'
 
 const page = () => {
   return (

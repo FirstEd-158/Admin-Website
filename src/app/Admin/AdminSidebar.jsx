@@ -16,13 +16,13 @@ const AdminSidebar = () => {
   const router = useRouter();
 
   const menuItems = [
-    { name: "Dashboard", icon: <FiHome />, path: "/Admin" },
-    { name: "Manage Users", icon: <FiUsers />, path: "/Admin/ManageUsers" },
-    { name: "Add Domain", icon: <FiPlusSquare />, path: "/Admin/Domain" },
-    { name: "Add Questions", icon: <FiPlusSquare />, path: "/Admin/AddQuestion" },
-    { name: "Manage Questions", icon: <FiDatabase />, path: "/Admin/ManageQuestions" },
-    { name: "Track Syllabus", icon: <GrSchedules />, path: "/Admin/Tracker" },
-    { name: "Profile", icon: <FiSettings />, path: "/Admin/Profile" },
+    { name: "Dashboard", icon: <FiHome />, path: "/admin" },
+    { name: "Manage Users", icon: <FiUsers />, path: "/admin/manage-users" },
+    { name: "Add Domain", icon: <FiPlusSquare />, path: "/admin/domain" },
+    { name: "Add Questions", icon: <FiPlusSquare />, path: "/admin/add-question" },
+    { name: "Manage Questions", icon: <FiDatabase />, path: "/admin/manage-questions" },
+    { name: "Track Syllabus", icon: <GrSchedules />, path: "/admin/tracker" },
+    { name: "Profile", icon: <FiSettings />, path: "/admin/profile" },
   ];
 
   return (

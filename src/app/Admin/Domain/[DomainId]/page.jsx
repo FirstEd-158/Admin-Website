@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import TestSeriesPage from './TestSeriesPage'
+import TestSeriesPage from './test-seriesPage'
 
 const page = () => {
   return (

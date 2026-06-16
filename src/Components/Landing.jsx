@@ -11,8 +11,8 @@ export default function LandingPage() {
   const router = useRouter();
 
   const gototracter=()=>{
-    if(signin) router.push("/Users/Tracker");
-    else router.push("/SignIn");
+    if(signin) router.push("/Users/tracker");
+    else router.push("/signin");
   }
 
   return (

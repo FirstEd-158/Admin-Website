@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/DomainService";
+import { AddDomain, DeleteDomain, GetAllDomain } from "@/Helper/Services/domainService";
 import { Slide, toast } from "react-toastify";
 
 const DomainManagement = () => {
@@ -68,7 +68,7 @@ const DomainManagement = () => {
   };
 
   const goToDomainTests = (domain) => {
-    router.push(`/Admin/Domain/${domain.id}`);
+    router.push(`/admin/domain/${domain.id}`);
   };
 
   return (

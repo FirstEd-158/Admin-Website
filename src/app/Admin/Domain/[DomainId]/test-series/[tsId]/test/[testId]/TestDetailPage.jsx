@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { GetAllDomain } from "@/Helper/Services/DomainService";
+import { GetAllDomain } from "@/Helper/Services/domainService";
 import { GetAllSubjects } from "@/Helper/Services/SubjectService";
 import {
   GetAllQuestionsFromSubject,
@@ -11,7 +11,7 @@ import {
 import katex from "katex";
 import "katex/dist/katex.min.css";
 import { useParams } from "next/navigation";
-import { GetSingleTest, UpdateTest } from "@/Helper/Services/TestService";
+import { GetSingleTest, UpdateTest } from "@/Helper/Services/testService";
 
 const reOrder = (list, start, end) => {
   const result = Array.from(list);
@@ -47,7 +47,7 @@ const RichTextViewer = ({ content }) => {
 };
 
 const TestDetailPage = () => {
-  const { TestId } = useParams();
+  const { testId } = useParams();
 
   const [questions, setQuestions] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -84,7 +84,7 @@ const TestDetailPage = () => {
 
         const [domainRes, testRes] = await Promise.all([
           GetAllDomain(),
-          GetSingleTest(TestId),
+          GetSingleTest(testId),
         ]);
 
         setDomains(domainRes.data || []);
@@ -104,7 +104,7 @@ const TestDetailPage = () => {
     };
 
     initPage();
-  }, [TestId]);
+  }, [testId]);
 
   /* ---------- LOAD SUBJECTS ---------- */
 
@@ -232,7 +232,7 @@ const TestDetailPage = () => {
         questions: questions.map((q) => q.id),
       };
 
-      await UpdateTest(TestId, payload);
+      await UpdateTest(testId, payload);
       alert("Test saved successfully!");
     } catch (error) {
       console.error(error);

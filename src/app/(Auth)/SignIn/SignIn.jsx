@@ -35,7 +35,7 @@ const SignIn = () => {
                 {position: 'top-center'}
               );
         
-        router.push("/Admin");
+        router.push("/admin");
         // router.push("/Users");
       } catch (error) {
         console.log(error);
@@ -136,7 +136,7 @@ const SignIn = () => {
             <p className="text-sm text-white/80 text-center mt-6">
               Don&apos;t have an account?{" "}
               <span
-                onClick={() => router.push("/SignUp")}
+                onClick={() => router.push("/signup")}
                 className="text-teal-300 hover:underline cursor-pointer"
               >
                 Sign up

@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { AddTestSections, GetAllTestSections } from "@/Helper/Services/TestSectionService";
-import { AddTests, GetAllTestsofTestSeries } from "@/Helper/Services/TestService";
+import { AddTestSections, GetAllTestSections } from "@/Helper/Services/testSectionService";
+import { AddTests, GetAllTestsofTestSeries } from "@/Helper/Services/testService";
 
 const TestSeriesDetail = () => {
     const router = useRouter();
-    const { DomainId, TsId } = useParams();
+    const { domainId, tsId } = useParams();
     const [sections, setSections] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -46,7 +46,7 @@ const TestSeriesDetail = () => {
         }
 
         try {
-            const testsRes = await GetAllTestsofTestSeries(TsId);
+            const testsRes = await GetAllTestsofTestSeries(tsId);
             testsData = testsRes.data;
 
             const formattedSections = sectionsData.map(section => ({
@@ -68,7 +68,7 @@ const TestSeriesDetail = () => {
 
         setLoading(false);
 
-    }, [TsId]);
+    }, [tsId]);
 
     useEffect(() => {
         fetchData();
@@ -109,7 +109,7 @@ const TestSeriesDetail = () => {
                 duration: Number(duration),
             };
 
-            const result = await AddTests(TsId, payload);
+            const result = await AddTests(tsId, payload);
 
             setSections(prevSections =>
                 prevSections.map(section =>
@@ -210,7 +210,7 @@ const TestSeriesDetail = () => {
                                     <div
                                         key={test.id}
                                         onClick={() =>
-                                            router.push(`/Admin/Domain/${DomainId}/TestSeries/${TsId}/Test/${test.id}`)
+                                            router.push(`/admin/domain/${domainId}/test-series/${tsId}/test/${test.id}`)
                                         }
                                         className="bg-white/20 rounded-lg p-4 flex justify-between items-center hover:bg-white/30 cursor-pointer transition"
                                     >

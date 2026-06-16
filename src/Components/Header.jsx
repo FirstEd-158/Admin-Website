@@ -16,7 +16,7 @@
 
 //   const gotoProfile=()=>{
 //     setDropdownOpen(false);
-//     router.push("/Users/Profile");
+//     router.push("/Users/profile");
 //   }
 
 //   return (

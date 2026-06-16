@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { SignupFunction } from "@/Helper/Services/AuthService";
 import { toast } from "react-toastify";
-import { signupSchema } from "../SignIn/Validation"; // your schema file
+import { signupSchema } from "../signin/Validation"; // your schema file
 
 const Signup = () => {
   const router = useRouter();
@@ -53,6 +53,8 @@ const Signup = () => {
     // }
 
     //  Only runs if validation passes
+
+    
     const data = {
       username: email,
       password: password,
@@ -73,7 +75,7 @@ const Signup = () => {
         position: "top-center",
       });
 
-      router.push("/Admin");
+      router.push("/admin");
     } catch (error) {
       console.error(error);
       toast.error("Signup failed");
@@ -199,7 +201,7 @@ const Signup = () => {
             <p className="text-sm text-white/80 text-center mt-6">
               Already have an account?{" "}
               <span
-                onClick={() => router.push("/SignIn")}
+                onClick={() => router.push("/signin")}
                 className="text-teal-300 hover:underline cursor-pointer"
               >
                 Login

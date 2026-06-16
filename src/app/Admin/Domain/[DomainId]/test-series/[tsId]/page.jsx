@@ -1,15 +1,16 @@
-
-
 import React from 'react'
-import AddQuestion from './AddQuestion'
+
+
+import TestSeriesDetail from './test-seriesDetail'
+
+
 
 const page = () => {
   return (
-
         <div className="flex-1 h-full">
-          <AddQuestion/>
+          <TestSeriesDetail/>
         </div>
-
+      
   )
 }
 

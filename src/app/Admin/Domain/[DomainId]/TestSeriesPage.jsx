@@ -4,13 +4,13 @@ import {
   AddTestSeries,
   DeleteTestSeries,
   GetAllTestSeries,
-} from "@/Helper/Services/TestSeriesService";
+} from "@/Helper/Services/test-seriesService";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Slide, toast } from "react-toastify";
 
 const TestSeriesPage = () => {
-  const { DomainId } = useParams();
+  const { domainId } = useParams();
   const router = useRouter();
 
   const [testSeriesList, setTestSeriesList] = useState([]);
@@ -31,8 +31,8 @@ const TestSeriesPage = () => {
     total_test: 0,
   });
 
-  const goToTestSeries = (TsId) => {
-    router.push(`/Admin/Domain/${DomainId}/TestSeries/${TsId}`);
+  const goToTestSeries = (tsId) => {
+    router.push(`/admin/domain/${domainId}/test-series/${tsId}`);
   };
 
   const handleAddClick = () => {
@@ -70,7 +70,7 @@ const TestSeriesPage = () => {
     const fetchTestSeries = async () => {
       try {
         const token = localStorage.getItem("accessToken") ?? "";
-        const result = await GetAllTestSeries(DomainId , token);
+        const result = await GetAllTestSeries(domainId , token);
         setTestSeriesList(result.data || []);
       } catch (error) {
         toast.error("Failed to fetch test series!");
@@ -78,7 +78,7 @@ const TestSeriesPage = () => {
     };
 
     fetchTestSeries();
-  }, [DomainId]);
+  }, [domainId]);
 
   const handleSave = async () => {
     if (!formData.name.trim()) {
@@ -87,7 +87,7 @@ const TestSeriesPage = () => {
     }
 
     try {
-      const result = await AddTestSeries(formData, DomainId);
+      const result = await AddTestSeries(formData, domainId);
 
       setTestSeriesList([...testSeriesList, result.data]);
 
@@ -123,7 +123,7 @@ const TestSeriesPage = () => {
   return (
     <div className="p-8 min-h-[calc(100vh-59px)] text-white font-sans flex flex-col">
       <h1 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg tracking-wide">
-        Test Series for <span className="text-teal-400">{DomainId}</span>
+        Test Series for <span className="text-teal-400">{domainId}</span>
       </h1>
 
       {!isAdding ? (

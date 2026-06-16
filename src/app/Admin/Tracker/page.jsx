@@ -1,5 +1,5 @@
 import React from 'react'
-import SyllabusTracker from './Tracker'
+import SyllabusTracker from './tracker'
 
 const page = () => {
   return (
