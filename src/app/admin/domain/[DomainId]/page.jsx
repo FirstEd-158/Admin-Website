@@ -1,14 +1,13 @@
 import React from 'react'
 
 
-import TestSeriesDetail from './TestSeriesDetail'
-
+import TestSeriesPage from './TestSeriesPage'
 
 
 const page = () => {
   return (
         <div className="flex-1 h-full">
-          <TestSeriesDetail/>
+          <TestSeriesPage/>
         </div>
       
   )
