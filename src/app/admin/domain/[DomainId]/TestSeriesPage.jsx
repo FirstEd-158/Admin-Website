@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Slide, toast } from "react-toastify";
 
 const TestSeriesPage = () => {
-  const { domainId } = useParams();
+  const { DomainId } = useParams();
   const router = useRouter();
 
   const [testSeriesList, setTestSeriesList] = useState([]);
@@ -32,7 +32,7 @@ const TestSeriesPage = () => {
   });
 
   const goToTestSeries = (tsId) => {
-    router.push(`/admin/domain/${domainId}/test-series/${tsId}`);
+    router.push(`/admin/domain/${DomainId}/test-series/${tsId}`);
   };
 
   const handleAddClick = () => {
@@ -70,7 +70,7 @@ const TestSeriesPage = () => {
     const fetchTestSeries = async () => {
       try {
         const token = localStorage.getItem("accessToken") ?? "";
-        const result = await GetAllTestSeries(domainId , token);
+        const result = await GetAllTestSeries(DomainId , token);
         setTestSeriesList(result.data || []);
       } catch (error) {
         toast.error("Failed to fetch test series!");
@@ -78,7 +78,7 @@ const TestSeriesPage = () => {
     };
 
     fetchTestSeries();
-  }, [domainId]);
+  }, [DomainId]);
 
   const handleSave = async () => {
     if (!formData.name.trim()) {
@@ -87,7 +87,20 @@ const TestSeriesPage = () => {
     }
 
     try {
-      const result = await AddTestSeries(formData, domainId);
+      const payload = {
+        ...formData,
+        old_price: formData.old_price ? Number(formData.old_price) : 0,
+        new_price: formData.new_price ? Number(formData.new_price) : 0,
+        type: formData.type ? Number(formData.type) : 0,
+        validity: formData.validity ? Number(formData.validity) : 0,
+        topic_wise_test: formData.topic_wise_test ? Number(formData.topic_wise_test) : 0,
+        subject_wise_test: formData.subject_wise_test ? Number(formData.subject_wise_test) : 0,
+        full_length_test: formData.full_length_test ? Number(formData.full_length_test) : 0,
+        total_test: formData.total_test ? Number(formData.total_test) : 0,
+        end_date: formData.end_date ? new Date(formData.end_date).toISOString() : null,
+      };
+
+      const result = await AddTestSeries(payload, DomainId);
 
       setTestSeriesList([...testSeriesList, result.data]);
 
@@ -123,7 +136,7 @@ const TestSeriesPage = () => {
   return (
     <div className="p-8 min-h-[calc(100vh-59px)] text-white font-sans flex flex-col">
       <h1 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg tracking-wide">
-        Test Series for <span className="text-teal-400">{domainId}</span>
+        Test Series for <span className="text-teal-400">{DomainId}</span>
       </h1>
 
       {!isAdding ? (
